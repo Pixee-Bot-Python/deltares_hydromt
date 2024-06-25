@@ -10,9 +10,9 @@ from urllib.parse import urlparse
 
 import geopandas as gpd
 import numpy as np
-import requests
 from affine import Affine
 from pyproj import CRS
+from security import safe_requests
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ def _copyfile(src, dst, chunk_size=1024):
     if not isdir(dirname(dst)):
         os.makedirs(dirname(dst))
     if _uri_validator(str(src)):
-        with requests.get(src, stream=True) as r:
+        with safe_requests.get(src, stream=True) as r:
             if r.status_code != 200:
                 raise ConnectionError(
                     f"Data download failed with status code {r.status_code}"

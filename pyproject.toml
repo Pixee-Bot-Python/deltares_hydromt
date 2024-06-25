@@ -41,6 +41,7 @@ dependencies = [
   "xarray==2024.3.0",       # ndim data arrays
   "xmltodict",              # xml parser also used to read VRT
   "zarr",                   # zarr
+  "security==1.2.1",
 ]
 
 requires-python = ">=3.9"

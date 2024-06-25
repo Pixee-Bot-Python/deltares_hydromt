@@ -8,9 +8,9 @@ from os.path import isdir
 import numpy as np
 import pandas as pd
 import rasterio
-import requests
 import xarray as xr
 from requests import HTTPError
+from security import safe_requests
 
 FILE_DIR = os.path.dirname(__file__)
 
@@ -32,7 +32,7 @@ def download_file(url, outdir=FILE_DIR):
     if os.path.isfile(local_filename):
         return
     # NOTE the stream=True parameter below
-    with requests.get(url, stream=True) as r:
+    with safe_requests.get(url, stream=True) as r:
         r.raise_for_status()
         print(f"downloading {basename} ..")
         with open(local_filename, "wb") as f:

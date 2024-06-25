@@ -27,7 +27,6 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 import pooch
-import requests
 import xarray as xr
 import yaml
 from packaging.specifiers import SpecifierSet
@@ -53,6 +52,7 @@ from .data_adapter import (
     RasterDatasetAdapter,
 )
 from .data_adapter.caching import HYDROMT_DATADIR, _uri_validator
+from security import safe_requests
 
 logger = logging.getLogger(__name__)
 
@@ -1765,7 +1765,7 @@ def _parse_data_source_dict(
 
 def _yml_from_uri_or_path(uri_or_path: Union[Path, str]) -> Dict:
     if _uri_validator(str(uri_or_path)):
-        with requests.get(uri_or_path, stream=True) as r:
+        with safe_requests.get(uri_or_path, stream=True) as r:
             r.raise_for_status()
             yml = yaml.load(r.text, Loader=yaml.FullLoader)
     else:
