@@ -32,7 +32,7 @@ def download_file(url, outdir=FILE_DIR):
     if os.path.isfile(local_filename):
         return
     # NOTE the stream=True parameter below
-    with requests.get(url, stream=True) as r:
+    with requests.get(url, stream=True, timeout=60) as r:
         r.raise_for_status()
         print(f"downloading {basename} ..")
         with open(local_filename, "wb") as f:
