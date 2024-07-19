@@ -34,7 +34,7 @@ def _copyfile(src, dst, chunk_size=1024):
     if not isdir(dirname(dst)):
         os.makedirs(dirname(dst))
     if _uri_validator(str(src)):
-        with requests.get(src, stream=True) as r:
+        with requests.get(src, stream=True, timeout=60) as r:
             if r.status_code != 200:
                 raise ConnectionError(
                     f"Data download failed with status code {r.status_code}"

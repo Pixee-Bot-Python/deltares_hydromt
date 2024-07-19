@@ -1765,7 +1765,7 @@ def _parse_data_source_dict(
 
 def _yml_from_uri_or_path(uri_or_path: Union[Path, str]) -> Dict:
     if _uri_validator(str(uri_or_path)):
-        with requests.get(uri_or_path, stream=True) as r:
+        with requests.get(uri_or_path, stream=True, timeout=60) as r:
             r.raise_for_status()
             yml = yaml.load(r.text, Loader=yaml.SafeLoader)
     else:
